@@ -1,5 +1,10 @@
 pipeline {
-    agent any
+    agent {
+        docker {
+            image 'node:7-alpine' 
+            args '-p 80:80' 
+        }
+    }
     stages {
         stage('Git pull') {
             steps {
@@ -10,10 +15,10 @@ pipeline {
         stage('Build') {
             steps {
                 // configId 即为之前配置的npm配置文件
-                nodejs(nodeJSInstallationName: 'node-v15.5.0', configId: 'npm-config') {
+                // nodejs(nodeJSInstallationName: 'node-v15.5.0', configId: 'npm-config') {
                     // npm 编译安装
                     sh 'npm install && npm run build'
-                }
+                // }
             }
         }
         stage('deploy') {
