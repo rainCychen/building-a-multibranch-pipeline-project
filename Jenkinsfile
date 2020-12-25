@@ -1,12 +1,12 @@
 pipeline {
     agent any
     stages {
-        // stage('Git pull') {
-        //     steps {
-        //         // 下载代码
-        //         git  branch: "${params.BRANCH}", url: 'git@github.com:rainCychen/building-a-multibranch-pipeline-project.git'
-        //     }
-        // }
+        stage('Git pull') {
+            steps {
+                // 下载代码
+                git 'https://github.com/rainCychen/building-a-multibranch-pipeline-project.git'
+            }
+        }
         stage('Build') {
             steps {
                 // configId 即为之前配置的npm配置文件
