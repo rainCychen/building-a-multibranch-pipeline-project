@@ -1,5 +1,6 @@
 pipeline {
-    stage('Git pull') {
+    stages {
+        stage('Git pull') {
             steps {
                 // 下载代码
                 git  branch: "${params.BRANCH}", url: 'git@github.com:rainCychen/building-a-multibranch-pipeline-project.git'
@@ -17,4 +18,6 @@ pipeline {
         stage('deploy') {
         sshPublisher(publishers: [sshPublisherDesc(configName: "${server_name}", transfers: [sshTransfer(cleanRemote: false, excludes: '', execCommand: '', execTimeout: 120000, flatten: false, makeEmptyDirs: false, noDefaultExcludes: false, patternSeparator: '[, ]+', remoteDirectory: '/usr/local/nginx/html/jenkinsTest', remoteDirectorySDF: false, removePrefix: 'dist', sourceFiles: 'dist/**')], usePromotionTimestamp: false, useWorkspaceInPromotion: false, verbose: false)])
         }
+    }
+    
 }
