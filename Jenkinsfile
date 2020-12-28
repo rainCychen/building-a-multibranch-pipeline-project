@@ -15,6 +15,7 @@ pipeline {
                     // // npm 编译安装
                     // sh 'npm install && npm run build'
                     sh 'npm install -g yarn -registry=https://registry.npm.taobao.org'
+                    // pure-lockfile  这个参数是在服务器install不生成yarn.lock，防止服务器和本地代码冲突
                     sh 'yarn install --pure-lockfile'
                     sh 'yarn run build'
                 }
@@ -22,7 +23,7 @@ pipeline {
         }
         stage('deploy') {
             steps {
-                sshPublisher(publishers: [sshPublisherDesc(configName: ['ali13'], transfers: [sshTransfer(cleanRemote: false, excludes: '', execCommand: '', execTimeout: 120000, flatten: false, makeEmptyDirs: false, noDefaultExcludes: false, patternSeparator: '[, ]+', remoteDirectory: './test1', remoteDirectorySDF: false, removePrefix: 'build', sourceFiles: 'build/**')], usePromotionTimestamp: false, useWorkspaceInPromotion: false, verbose: false)])
+                sshPublisher(publishers: [sshPublisherDesc(configName: 'ali13', transfers: [sshTransfer(cleanRemote: false, excludes: '', execCommand: '', execTimeout: 120000, flatten: false, makeEmptyDirs: false, noDefaultExcludes: false, patternSeparator: '[, ]+', remoteDirectory: './test1', remoteDirectorySDF: false, removePrefix: 'build', sourceFiles: 'build/**')], usePromotionTimestamp: false, useWorkspaceInPromotion: false, verbose: false)])
             }
                 
         }
